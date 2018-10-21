@@ -76,12 +76,14 @@ public class FloatingPanelController: UIViewController, UIScrollViewDelegate, UI
         return floatingPanel.state
     }
 
-    /// The insets derived from the content insets and the safe area of the tracking scroll view.
+    /// The content insets of the tracking scroll view derived the safe area of the parent view
     public var adjustedContentInsets: UIEdgeInsets {
         return floatingPanel.layoutAdapter.adjustedContentInsets
     }
 
     /// The behavior for determining the adjusted content offsets.
+    ///
+    /// This property specifies how the content area of the tracking scroll view are modified using `adjustedContentInsets`. The default value of this property is FloatingPanelController.ContentInsetAdjustmentBehavior.always.
     public var contentInsetAdjustmentBehavior: ContentInsetAdjustmentBehavior = .always
 
     private var floatingPanel: FloatingPanel!
@@ -171,7 +173,7 @@ public class FloatingPanelController: UIViewController, UIScrollViewDelegate, UI
         }
     }
 
-    // MARK: Container view controller responsibilities
+    // MARK: - Container view controller interface
 
     /// Adds the view mangaed the controller as a child of the specified view controller.
     /// - Parameters:
@@ -267,6 +269,8 @@ public class FloatingPanelController: UIViewController, UIScrollViewDelegate, UI
         vc.didMove(toParent: self)
     }
 
+    // MARK: - Scroll view tracking
+
     /// Tracks the specified scroll view for the inteface to correspond with the scroll.
     ///
     /// - Attention:
@@ -289,6 +293,8 @@ public class FloatingPanelController: UIViewController, UIScrollViewDelegate, UI
             break
         }
     }
+
+    // MARK: - Helpers
 
     /// Returns the y-coordinate of the point at the origin of the surface view
     public func originYOfSurface(for pos: FloatingPanelPosition) -> CGFloat {
